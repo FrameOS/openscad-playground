@@ -54,7 +54,7 @@ export function createInitialState(
         sources,
         features: [],
         exportFormat2D: "svg",
-        exportFormat3D: "glb",
+        exportFormat3D: "stl",
       },
       view: {
         layout: {
