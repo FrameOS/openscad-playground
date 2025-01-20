@@ -3,10 +3,10 @@
 // import defaultScad from "./default-scad.ts";
 import { Source, State } from "./app-state.ts";
 
-import models from "../models.json";
+import cases from "../cases.json";
 
-const defaultScad = models["mark1.scad"];
-export const defaultSourcePath = "/mark1.scad";
+const defaultScad = cases["welcome.scad"];
+export const defaultSourcePath = "/welcome.scad";
 export const defaultModelColor = "#f9d72c";
 // const defaultBlurhash =
 //   "|KSPX^%3~qtjMx$lR*x]t7n,R%xuxbM{WBt7ayfk_3bY9FnAt8XOxanjNF%fxbMyIn%3t7NFoLaeoeV[WBo{xar^IoS1xbxcR*S0xbofRjV[j[kCNGofxaWBNHW-xasDR*WTkBxuWBM{s:t7bYahRjfkozWUadofbIW:jZ";
@@ -38,7 +38,7 @@ export function createInitialState(
     //   blurhash = defaultBlurhash;
     // }
 
-    const sources: Source[] = Object.entries(models).map(([path, content]) => ({
+    const sources: Source[] = Object.entries(cases).map(([path, content]) => ({
       path: `/${path}`,
       content,
     }));
