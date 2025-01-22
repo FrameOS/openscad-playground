@@ -1,6 +1,6 @@
 {
-  "short_name": "OpenSCAD",
-  "name": "OpenSCAD Playground",
+  "short_name": "CaseMaker",
+  "name": "FrameOS Case Maker",
   "icons": [
     {
       "src": "favicon.ico",
