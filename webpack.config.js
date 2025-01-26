@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
 const WorkboxPlugin = require("workbox-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const packageConfig = require("./package.json");
 
@@ -55,7 +56,9 @@ module.exports = [
       extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-      filename: "index.js",
+      // Use [contenthash] for cache busting
+      filename: "[name].[contenthash].js",
+      chunkFilename: "[name].[contenthash].js",
       path: path.resolve(__dirname, "dist"),
     },
     devServer: {
@@ -98,6 +101,9 @@ module.exports = [
           {
             from: path.resolve(__dirname, "public"),
             toType: "dir",
+            filter: (resourcePath) => {
+              return !resourcePath.endsWith("index.html");
+            },
           },
           {
             from: path.resolve(__dirname, "node_modules/primeicons/fonts"),
@@ -109,6 +115,10 @@ module.exports = [
             from: path.resolve(__dirname, "src/wasm/openscad.wasm"),
           },
         ],
+      }),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "public", "index.html"),
+        minify: !isDev,
       }),
     ],
   },
