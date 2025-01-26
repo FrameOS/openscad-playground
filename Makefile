@@ -63,7 +63,8 @@ wasm: libs/openscad
 
 libs/openscad-wasm:
 	mkdir -p libs/openscad-wasm
-	wget ${WASM_BUILD_URL} -O libs/openscad-wasm.zip
+	cp assets/openscad-wasm.zip libs/openscad-wasm.zip
+	# wget ${WASM_BUILD_URL} -O libs/openscad-wasm.zip
 	( cd libs/openscad-wasm && unzip ../openscad-wasm.zip )
 	
 public/openscad.js: libs/openscad-wasm libs/openscad-wasm/openscad.js

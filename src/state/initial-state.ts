@@ -5,8 +5,8 @@ import { Source, State } from "./app-state.ts";
 
 import cases from "../cases.json";
 
-const defaultScad = cases["welcome.scad"];
-export const defaultSourcePath = "/welcome.scad";
+const defaultScad = cases["hello.scad"];
+export const defaultSourcePath = "/hello.scad";
 export const defaultModelColor = "#f9d72c";
 // const defaultBlurhash =
 //   "|KSPX^%3~qtjMx$lR*x]t7n,R%xuxbM{WBt7ayfk_3bY9FnAt8XOxanjNF%fxbMyIn%3t7NFoLaeoeV[WBo{xar^IoS1xbxcR*S0xbofRjV[j[kCNGofxaWBNHW-xasDR*WTkBxuWBM{s:t7bYahRjfkozWUadofbIW:jZ";
