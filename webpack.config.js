@@ -1,37 +1,37 @@
-const webpack = require('webpack');
+const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
-const WorkboxPlugin = require('workbox-webpack-plugin');
-const path = require('path');
-const packageConfig = require('./package.json');
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const path = require("path");
+const packageConfig = require("./package.json");
 
-const LOCAL_URL = process.env.LOCAL_URL ?? 'http://localhost:4000/';
+const LOCAL_URL = process.env.LOCAL_URL ?? "http://localhost:4000/";
 const PUBLIC_URL = process.env.PUBLIC_URL ?? packageConfig.homepage;
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== "production";
 
 module.exports = [
   {
-    entry: './src/index.tsx',
-    devtool: isDev ? 'source-map' : 'nosources-source-map',
-    mode: isDev ? 'development' : 'production',
-    target: 'web',
+    entry: "./src/index.tsx",
+    devtool: isDev ? "source-map" : "nosources-source-map",
+    mode: isDev ? "development" : "production",
+    target: "web",
     // devtool: 'inline-source-map',
     module: {
       rules: [
         {
           test: /\.tsx?$/,
           use: {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
               compilerOptions: {
-                module: 'esnext',
-                moduleResolution: 'node',
-                target: 'ES2022',
-                lib: ['WebWorker', 'ES2022'],
+                module: "esnext",
+                moduleResolution: "node",
+                target: "ES2022",
+                lib: ["WebWorker", "ES2022"],
                 sourceMap: isDev,
-                inlineSources: isDev
-              }
-            }
+                inlineSources: isDev,
+              },
+            },
           },
           exclude: /node_modules/,
         },
@@ -40,10 +40,10 @@ module.exports = [
           use: [
             "style-loader",
             {
-              loader: 'css-loader',
-              options:{url: false},
-            }
-          ]
+              loader: "css-loader",
+              options: { url: false },
+            },
+          ],
         },
         // {
         //   test: /\.(png|gif|woff|woff2|eot|ttf|svg)$/,
@@ -52,11 +52,11 @@ module.exports = [
       ],
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-      filename: 'index.js',
-      path: path.resolve(__dirname, 'dist'),
+      filename: "index.js",
+      path: path.resolve(__dirname, "dist"),
     },
     devServer: {
       static: path.join(__dirname, "dist"),
@@ -65,67 +65,67 @@ module.exports = [
     },
     plugins: [
       new webpack.EnvironmentPlugin({
-        'process.env.NODE_ENV': 'development',
+        "process.env.NODE_ENV": "development",
       }),
-      ...(process.env.NODE_ENV === 'production' ? [
-        new WorkboxPlugin.GenerateSW({
-            exclude: [
-              /(^|\/)\./,
-              /\.map$/,
-              /^manifest.*\.js$/,
-            ],
-            // these options encourage the ServiceWorkers to get in there fast     
-            // and not allow any straggling "old" SWs to hang around     
-            swDest: path.join(__dirname, "dist", 'sw.js'),
-            maximumFileSizeToCacheInBytes: 200 * 1024 * 1024,
-            clientsClaim: true,
-            skipWaiting: true,
-            runtimeCaching: [{
-              urlPattern: ({request, url}) => true,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'all',
-                expiration: {
-                  maxEntries: 1000,
-                  purgeOnQuotaError: true,
+      ...(process.env.NODE_ENV === "production"
+        ? [
+            new WorkboxPlugin.GenerateSW({
+              exclude: [/(^|\/)\./, /\.map$/, /^manifest.*\.js$/],
+              // these options encourage the ServiceWorkers to get in there fast
+              // and not allow any straggling "old" SWs to hang around
+              swDest: path.join(__dirname, "dist", "sw.js"),
+              maximumFileSizeToCacheInBytes: 200 * 1024 * 1024,
+              clientsClaim: true,
+              skipWaiting: true,
+              runtimeCaching: [
+                {
+                  urlPattern: ({ request, url }) => true,
+                  handler: "StaleWhileRevalidate",
+                  options: {
+                    cacheName: "all",
+                    expiration: {
+                      maxEntries: 1000,
+                      purgeOnQuotaError: true,
+                    },
+                  },
                 },
-              },
-            }],
-        }),
-      ] : []),
+              ],
+            }),
+          ]
+        : []),
       new CopyPlugin({
         patterns: [
-          { 
-            from: path.resolve(__dirname, 'public'),
-            toType: 'dir',
+          {
+            from: path.resolve(__dirname, "public"),
+            toType: "dir",
           },
-          { 
-            from: path.resolve(__dirname, 'node_modules/primeicons/fonts'),
-            to: path.resolve(__dirname, 'dist/fonts'),
-            toType: 'dir',
+          {
+            from: path.resolve(__dirname, "node_modules/primeicons/fonts"),
+            to: path.resolve(__dirname, "dist/fonts"),
+            toType: "dir",
           },
-          { 
-            from: path.resolve(__dirname, 'src/wasm/openscad.js'),
-            from: path.resolve(__dirname, 'src/wasm/openscad.wasm'),
+          {
+            from: path.resolve(__dirname, "src/wasm/openscad.js"),
+            from: path.resolve(__dirname, "src/wasm/openscad.wasm"),
           },
         ],
       }),
     ],
   },
   {
-    entry: './src/runner/openscad-worker.ts',
+    entry: "./src/runner/openscad-worker.ts",
     output: {
-      filename: 'openscad-worker.js',
-      path: path.resolve(__dirname, 'dist'),
-      globalObject: 'self',
+      filename: "openscad-worker.js",
+      path: path.resolve(__dirname, "dist"),
+      globalObject: "self",
       // library: {
       //   type: 'module'
       // }
     },
-    devtool: isDev ? 'source-map' : 'nosources-source-map',
-    mode: 'production',
+    devtool: isDev ? "source-map" : "nosources-source-map",
+    mode: "production",
     // mode: isDev ? 'development' : 'production',
-    target: 'webworker',
+    target: "webworker",
     // experiments: {
     //   outputModule: true,
     // },
@@ -134,45 +134,42 @@ module.exports = [
         {
           test: /\.tsx?$/,
           use: {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
               compilerOptions: {
-                module: 'esnext',
-                moduleResolution: 'node',
-                target: 'ES2022',
-                lib: ['WebWorker', 'ES2022'],
+                module: "esnext",
+                moduleResolution: "node",
+                target: "ES2022",
+                lib: ["WebWorker", "ES2022"],
                 sourceMap: isDev,
-                inlineSources: isDev
-              }
-            }
+                inlineSources: isDev,
+              },
+            },
           },
           exclude: /node_modules/,
         },
         {
           test: /\.wasm$/,
-          type: 'asset/resource'
-        }
-      ]
+          type: "asset/resource",
+        },
+      ],
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.mjs', '.wasm'],
-      modules: [
-        path.resolve(__dirname, 'src'),
-        'node_modules'
-      ],
+      extensions: [".tsx", ".ts", ".js", ".mjs", ".wasm"],
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
       fallback: {
         fs: false,
         path: false,
-        module: false
-      }
+        module: false,
+      },
     },
     externals: {
-      'browserfs': 'BrowserFS'
+      browserfs: "BrowserFS",
     },
     plugins: [
       new webpack.EnvironmentPlugin({
-        'process.env.NODE_ENV': 'development',
+        "process.env.NODE_ENV": "development",
       }),
     ],
   },
