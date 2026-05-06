@@ -22,11 +22,7 @@
     "jsx": "react-jsx",
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "declaration": true,
-    "baseUrl": "src",
-    "paths": {
-      "*": ["*"]
-    }
+    "declaration": true
   },
   "include": [
     "src/**/*.ts",

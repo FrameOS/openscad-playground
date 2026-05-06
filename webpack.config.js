@@ -26,7 +26,6 @@ module.exports = [
               transpileOnly: true,
               compilerOptions: {
                 module: "esnext",
-                moduleResolution: "node",
                 target: "ES2022",
                 lib: ["WebWorker", "ES2022"],
                 sourceMap: isDev,
@@ -149,7 +148,6 @@ module.exports = [
               transpileOnly: true,
               compilerOptions: {
                 module: "esnext",
-                moduleResolution: "node",
                 target: "ES2022",
                 lib: ["WebWorker", "ES2022"],
                 sourceMap: isDev,
